@@ -6,58 +6,87 @@
   <title>Hub Digital+ Contabilidade</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #0d0d0d; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding-bottom: 3rem; }
-    .header { background: #111; border-bottom: 1px solid #1e3a1e; padding: 1.2rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+
+    :root {
+      --bg: #0d0d0d; --bg2: #111; --bg3: #161616;
+      --border: #1e3a1e; --green: #4de84d; --green2: #2a5a2a;
+      --green3: #3d6b3d; --green4: #0f2a0f; --green5: #1e4a1e;
+      --text: #e0e0e0; --text2: #4a7a4a; --text3: #5a9a5a;
+      --inactive: #444; --inactive-bg: #1a1a1a; --inactive-border: #252525;
+      --shadow: rgba(0,0,0,0.4);
+    }
+    .light {
+      --bg: #f0f4f0; --bg2: #ffffff; --bg3: #ffffff;
+      --border: #b8d4b8; --green: #1a7a1a; --green2: #2d8a2d;
+      --green3: #3a7a3a; --green4: #e8f5e8; --green5: #c8e8c8;
+      --text: #1a2a1a; --text2: #3a6a3a; --text3: #4a7a4a;
+      --inactive: #aaa; --inactive-bg: #f0f0f0; --inactive-border: #ddd;
+      --shadow: rgba(0,0,0,0.1);
+    }
+
+    body { background: var(--bg); min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding-bottom: 3rem; transition: background 0.25s; }
+    .header { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 1.2rem 2rem; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 8px var(--shadow); transition: background 0.25s, border-color 0.25s; }
     .logo-area { display: flex; align-items: center; gap: 14px; }
     .logo-icon { width: 42px; height: 42px; flex-shrink: 0; }
-    .logo-name { font-size: 22px; font-weight: 700; color: #4de84d; letter-spacing: -0.5px; }
-    .logo-sub { font-size: 10px; letter-spacing: 3px; color: #5a9a5a; text-transform: uppercase; }
-    .header-right { display: flex; align-items: center; gap: 10px; }
-    .dot-live { width: 7px; height: 7px; background: #4de84d; border-radius: 50%; animation: pulse 2s infinite; }
+    .logo-name { font-size: 22px; font-weight: 700; color: var(--green); letter-spacing: -0.5px; }
+    .logo-sub { font-size: 10px; letter-spacing: 3px; color: var(--text3); text-transform: uppercase; }
+    .header-right { display: flex; align-items: center; gap: 14px; }
+    .dot-live { width: 7px; height: 7px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-    .live-label { font-size: 12px; color: #4de84d; letter-spacing: 1px; }
+    .live-label { font-size: 12px; color: var(--green); letter-spacing: 1px; }
+
+    /* TOGGLE TEMA */
+    .theme-toggle { display: flex; align-items: center; gap: 7px; background: var(--bg3); border: 1px solid var(--border); border-radius: 20px; padding: 5px 10px; cursor: pointer; transition: all 0.2s; }
+    .theme-toggle:hover { border-color: var(--green); }
+    .toggle-track { width: 32px; height: 18px; background: var(--inactive-border); border-radius: 20px; position: relative; transition: background 0.25s; flex-shrink: 0; }
+    .light .toggle-track { background: var(--green); }
+    .toggle-thumb { width: 12px; height: 12px; background: #fff; border-radius: 50%; position: absolute; top: 3px; left: 3px; transition: left 0.25s; box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+    .light .toggle-thumb { left: 17px; }
+    .theme-icon { color: var(--text3); }
+
     .welcome { padding: 2rem 2rem 0.5rem; }
-    .welcome-title { font-size: 13px; color: #4a7a4a; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
-    .welcome-sub { font-size: 26px; font-weight: 500; color: #e8e8e8; }
-    .welcome-sub span { color: #4de84d; }
+    .welcome-title { font-size: 13px; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+    .welcome-sub { font-size: 26px; font-weight: 500; color: var(--text); }
+    .welcome-sub span { color: var(--green); }
     .stats-row { display: flex; gap: 14px; padding: 0 2rem; margin-top: 1.8rem; }
-    .stat-card { background: #111; border: 1px solid #1e3a1e; border-radius: 10px; padding: 0.9rem 1.2rem; flex: 1; }
-    .stat-label { font-size: 11px; color: #3d6b3d; letter-spacing: 1px; text-transform: uppercase; }
-    .stat-value { font-size: 24px; font-weight: 500; color: #4de84d; margin-top: 2px; }
+    .stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 0.9rem 1.2rem; flex: 1; transition: all 0.25s; }
+    .stat-label { font-size: 11px; color: var(--text3); letter-spacing: 1px; text-transform: uppercase; }
+    .stat-value { font-size: 24px; font-weight: 500; color: var(--green); margin-top: 2px; }
     .search-wrap { padding: 1.2rem 2rem 0; }
-    .search-box { display: flex; align-items: center; gap: 10px; background: #161616; border: 1px solid #1e3a1e; border-radius: 12px; padding: 0 1rem; transition: border-color 0.18s; }
-    .search-box:focus-within { border-color: #4de84d; }
-    .search-box input { background: transparent; border: none; outline: none; color: #e0e0e0; font-size: 15px; padding: 0.85rem 0; width: 100%; font-family: inherit; }
-    .search-box input::placeholder { color: #3d6b3d; }
-    .clear-btn { background: none; border: none; cursor: pointer; color: #3d6b3d; font-size: 18px; line-height: 1; padding: 4px; border-radius: 4px; display: none; align-items: center; justify-content: center; }
+    .search-box { display: flex; align-items: center; gap: 10px; background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; padding: 0 1rem; transition: border-color 0.18s, background 0.25s; }
+    .search-box:focus-within { border-color: var(--green); }
+    .search-box input { background: transparent; border: none; outline: none; color: var(--text); font-size: 15px; padding: 0.85rem 0; width: 100%; font-family: inherit; }
+    .search-box input::placeholder { color: var(--text3); }
+    .clear-btn { background: none; border: none; cursor: pointer; color: var(--text3); font-size: 18px; line-height: 1; padding: 4px; border-radius: 4px; display: none; align-items: center; justify-content: center; }
     .clear-btn.visible { display: flex; }
-    .clear-btn:hover { color: #4de84d; }
+    .clear-btn:hover { color: var(--green); }
     .filter-row { display: flex; gap: 8px; padding: 0.9rem 2rem 0; flex-wrap: wrap; }
-    .filter-btn { background: #161616; border: 1px solid #1e3a1e; color: #4a7a4a; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; cursor: pointer; transition: all 0.15s; font-family: inherit; }
-    .filter-btn:hover { border-color: #4de84d; color: #4de84d; }
-    .filter-btn.active { background: #0f2a0f; border-color: #4de84d; color: #4de84d; }
-    .section-label { padding: 1.6rem 2rem 0.8rem; font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: #3d6b3d; }
+    .filter-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text3); font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .filter-btn:hover { border-color: var(--green); color: var(--green); }
+    .filter-btn.active { background: var(--green4); border-color: var(--green); color: var(--green); }
+    .section-label { padding: 1.6rem 2rem 0.8rem; font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--text3); }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; padding: 0 2rem; }
-    .card { background: #161616; border: 1px solid #1e3a1e; border-radius: 14px; padding: 1.4rem 1.2rem 1.2rem; display: flex; flex-direction: column; gap: 10px; min-height: 160px; text-decoration: none; }
-    .card.clickable { cursor: pointer; transition: border-color 0.18s, background 0.18s; }
-    .card.clickable:hover { border-color: #4de84d; background: #181f18; }
-    .card.inactive { border-color: #1a1a1a; opacity: 0.45; cursor: default; }
+    .card { background: var(--bg3); border: 1px solid var(--border); border-radius: 14px; padding: 1.4rem 1.2rem 1.2rem; display: flex; flex-direction: column; gap: 10px; min-height: 160px; text-decoration: none; transition: all 0.2s; }
+    .card.clickable { cursor: pointer; }
+    .card.clickable:hover { border-color: var(--green); background: var(--green4); transform: translateY(-2px); box-shadow: 0 4px 16px var(--shadow); }
+    .card.inactive { border-color: var(--inactive-border); opacity: 0.45; cursor: default; }
+    .card.inactive:hover { transform: none; border-color: var(--inactive-border); background: var(--bg3); box-shadow: none; }
     .card.hidden { display: none; }
     .card-top { display: flex; align-items: flex-start; justify-content: space-between; }
-    .card-icon { width: 40px; height: 40px; border-radius: 10px; background: #0f2a0f; border: 1px solid #1e4a1e; display: flex; align-items: center; justify-content: center; }
-    .card.inactive .card-icon { background: #1a1a1a; border-color: #252525; }
-    .card-name { font-size: 15px; font-weight: 500; color: #e0e0e0; line-height: 1.3; }
-    .card.inactive .card-name { color: #444; }
-    .card-desc { font-size: 12px; color: #4a7a4a; line-height: 1.5; flex: 1; }
-    .card.inactive .card-desc { color: #333; }
+    .card-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--green4); border: 1px solid var(--green5); display: flex; align-items: center; justify-content: center; }
+    .card.inactive .card-icon { background: var(--inactive-bg); border-color: var(--inactive-border); }
+    .card-name { font-size: 15px; font-weight: 500; color: var(--text); line-height: 1.3; }
+    .card.inactive .card-name { color: var(--inactive); }
+    .card-desc { font-size: 12px; color: var(--text2); line-height: 1.5; flex: 1; }
+    .card.inactive .card-desc { color: var(--inactive-border); }
     .card-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 4px; }
     .card-badge { display: inline-block; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; }
-    .badge-active { background: #0f2a0f; color: #4de84d; border: 1px solid #1e4a1e; }
-    .badge-coming { background: #1a1a1a; color: #444; border: 1px solid #252525; }
-    .card-url { font-size: 11px; color: #3d6b3d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px; }
+    .badge-active { background: var(--green4); color: var(--green); border: 1px solid var(--green5); }
+    .badge-coming { background: var(--inactive-bg); color: var(--inactive); border: 1px solid var(--inactive-border); }
+    .card-url { font-size: 11px; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px; }
     .link-icon { opacity: 0; transition: opacity 0.15s; flex-shrink: 0; }
     .card.clickable:hover .link-icon { opacity: 1; }
-    .no-results { display: none; padding: 3rem 2rem; text-align: center; color: #3d6b3d; font-size: 14px; }
+    .no-results { display: none; padding: 3rem 2rem; text-align: center; color: var(--text3); font-size: 14px; }
     .no-results.visible { display: block; }
     @media (max-width: 600px) {
       .stats-row { flex-direction: column; }
@@ -86,6 +115,19 @@
     <div class="header-right">
       <div class="dot-live"></div>
       <span class="live-label">Painel ativo</span>
+      <div class="theme-toggle" onclick="toggleTheme()" title="Alternar tema claro/escuro">
+        <svg class="theme-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <circle cx="7" cy="7" r="3" stroke="currentColor" stroke-width="1.3"/>
+          <line x1="7" y1="1" x2="7" y2="2.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="7" y1="11.5" x2="7" y2="13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="1" y1="7" x2="2.5" y2="7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+          <line x1="11.5" y1="7" x2="13" y2="7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        <div class="toggle-track"><div class="toggle-thumb"></div></div>
+        <svg class="theme-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M11 7.5A4.5 4.5 0 016.5 3a4.5 4.5 0 100 9A4.5 4.5 0 0011 7.5z" stroke="currentColor" stroke-width="1.3"/>
+        </svg>
+      </div>
     </div>
   </div>
 
@@ -103,8 +145,8 @@
   <div class="search-wrap">
     <div class="search-box">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-        <circle cx="6.5" cy="6.5" r="4.5" stroke="#3d6b3d" stroke-width="1.3"/>
-        <line x1="10" y1="10" x2="14" y2="14" stroke="#3d6b3d" stroke-width="1.3" stroke-linecap="round"/>
+        <circle cx="6.5" cy="6.5" r="4.5" stroke="var(--text3)" stroke-width="1.3"/>
+        <line x1="10" y1="10" x2="14" y2="14" stroke="var(--text3)" stroke-width="1.3" stroke-linecap="round"/>
       </svg>
       <input type="text" id="searchInput" placeholder="Buscar sistema..." autocomplete="off"/>
       <button class="clear-btn" id="clearBtn" onclick="clearSearch()">&#x2715;</button>
@@ -121,148 +163,86 @@
        SISTEMAS ATIVOS
        Para adicionar: copie um bloco <a class="card clickable"> abaixo,
        preencha href, data-name, data-desc, card-name, card-desc, card-url.
-       Para sistema sem link: use <div class="card"> sem href.
   =============================================================== -->
   <div id="activeSection">
     <div class="section-label">Sistemas disponíveis</div>
-    <div class="grid" id="activeGrid">
+    <div class="grid">
 
-      
       <!-- EXTRATOPRO -->
       <a class="card clickable" href="https://extratopro.vercel.app/" target="_blank" rel="noopener" data-name="extratopro extrato makrosystem" data-desc="transforma extrato bancário pdf planilha importação makrosystem" data-status="ativo">
         <div class="card-top">
-          <div class="card-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <rect x="3" y="2" width="14" height="16" rx="2" stroke="#4de84d" stroke-width="1.3"/>
-              <line x1="6" y1="6" x2="14" y2="6" stroke="#4de84d" stroke-width="1.2"/>
-              <line x1="6" y1="9" x2="14" y2="9" stroke="#2a5a2a" stroke-width="1.2"/>
-              <line x1="6" y1="12" x2="11" y2="12" stroke="#2a5a2a" stroke-width="1.2"/>
-            </svg>
-          </div>
-          <svg class="link-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M3 11L11 3M11 3H6M11 3V8" stroke="#4de84d" stroke-width="1.3" stroke-linecap="round"/>
-          </svg>
+          <div class="card-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="2" width="14" height="16" rx="2" stroke="var(--green)" stroke-width="1.3"/><line x1="6" y1="6" x2="14" y2="6" stroke="var(--green)" stroke-width="1.2"/><line x1="6" y1="9" x2="14" y2="9" stroke="var(--green2)" stroke-width="1.2"/><line x1="6" y1="12" x2="11" y2="12" stroke="var(--green2)" stroke-width="1.2"/></svg></div>
+          <svg class="link-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H6M11 3V8" stroke="var(--green)" stroke-width="1.3" stroke-linecap="round"/></svg>
         </div>
         <div class="card-name">ExtratoPro</div>
         <div class="card-desc">Transforma extrato bancário em PDF para planilha de importação no Makrosystem.</div>
-        <div class="card-footer">
-          <span class="card-badge badge-active">Ativo</span>
-          <span class="card-url">extratopro.vercel.app</span>
-        </div>
+        <div class="card-footer"><span class="card-badge badge-active">Ativo</span><span class="card-url">extratopro.vercel.app</span></div>
       </a>
 
       <!-- PAINEL DE GESTÃO -->
       <a class="card clickable" href="https://gestaodesolicitacao.vercel.app" target="_blank" rel="noopener" data-name="painel de gestão gestao solicitações acessorias" data-desc="gestão solicitações em aberto acessórias" data-status="ativo">
         <div class="card-top">
-          <div class="card-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <rect x="2" y="2" width="7" height="7" rx="1.5" stroke="#4de84d" stroke-width="1.3"/>
-              <rect x="11" y="2" width="7" height="7" rx="1.5" stroke="#4de84d" stroke-width="1.3"/>
-              <rect x="2" y="11" width="7" height="7" rx="1.5" stroke="#4de84d" stroke-width="1.3"/>
-              <rect x="11" y="11" width="7" height="7" rx="1.5" stroke="#2a5a2a" stroke-width="1.3"/>
-            </svg>
-          </div>
-          <svg class="link-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M3 11L11 3M11 3H6M11 3V8" stroke="#4de84d" stroke-width="1.3" stroke-linecap="round"/>
-          </svg>
+          <div class="card-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" stroke="var(--green)" stroke-width="1.3"/><rect x="11" y="2" width="7" height="7" rx="1.5" stroke="var(--green)" stroke-width="1.3"/><rect x="2" y="11" width="7" height="7" rx="1.5" stroke="var(--green)" stroke-width="1.3"/><rect x="11" y="11" width="7" height="7" rx="1.5" stroke="var(--green2)" stroke-width="1.3"/></svg></div>
+          <svg class="link-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H6M11 3V8" stroke="var(--green)" stroke-width="1.3" stroke-linecap="round"/></svg>
         </div>
         <div class="card-name">Painel de gestão</div>
         <div class="card-desc">Gestão das solicitações em aberto no Acessórias.</div>
-        <div class="card-footer">
-          <span class="card-badge badge-active">Ativo</span>
-          <span class="card-url">gestaodesolicitacao.vercel.app</span>
-        </div>
+        <div class="card-footer"><span class="card-badge badge-active">Ativo</span><span class="card-url">gestaodesolicitacao.vercel.app</span></div>
       </a>
 
       <!-- SUGESTÃO DE AUTOMAÇÃO -->
       <a class="card clickable" href="https://painel-automacaoparacolaboradores.vercel.app" target="_blank" rel="noopener" data-name="sugestão sugestao de automação automacao" data-desc="envie sugestões automatização processos time" data-status="ativo">
         <div class="card-top">
-          <div class="card-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <circle cx="10" cy="10" r="7" stroke="#4de84d" stroke-width="1.3"/>
-              <path d="M7 10l2 2 4-4" stroke="#4de84d" stroke-width="1.3" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <svg class="link-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M3 11L11 3M11 3H6M11 3V8" stroke="#4de84d" stroke-width="1.3" stroke-linecap="round"/>
-          </svg>
+          <div class="card-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="var(--green)" stroke-width="1.3"/><path d="M7 10l2 2 4-4" stroke="var(--green)" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <svg class="link-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H6M11 3V8" stroke="var(--green)" stroke-width="1.3" stroke-linecap="round"/></svg>
         </div>
         <div class="card-name">Sugestão de automação</div>
         <div class="card-desc">Envie sugestões de automatização para a equipe.</div>
-        <div class="card-footer">
-          <span class="card-badge badge-active">Ativo</span>
-          <span class="card-url">painel-automacao...vercel.app</span>
-        </div>
+        <div class="card-footer"><span class="card-badge badge-active">Ativo</span><span class="card-url">painel-automacao...vercel.app</span></div>
       </a>
 
       <!-- INADIMPLÊNCIA DIGITAL -->
       <a class="card clickable" href="https://inadimplenciadigital.vercel.app" target="_blank" rel="noopener" data-name="inadimplência inadimplencia digital cobrança clientes atraso" data-desc="monitora identifica clientes inadimplentes gestão régua cobrança" data-status="ativo">
         <div class="card-top">
-          <div class="card-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <circle cx="10" cy="9" r="5.5" stroke="#4de84d" stroke-width="1.3"/>
-              <line x1="10" y1="6.5" x2="10" y2="9.5" stroke="#4de84d" stroke-width="1.3" stroke-linecap="round"/>
-              <circle cx="10" cy="11.5" r="0.7" fill="#4de84d"/>
-              <path d="M4 16c1.2-1.2 3.5-2 6-2s4.8.8 6 2" stroke="#2a5a2a" stroke-width="1.2" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <svg class="link-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M3 11L11 3M11 3H6M11 3V8" stroke="#4de84d" stroke-width="1.3" stroke-linecap="round"/>
-          </svg>
+          <div class="card-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="9" r="5.5" stroke="var(--green)" stroke-width="1.3"/><line x1="10" y1="6.5" x2="10" y2="9.5" stroke="var(--green)" stroke-width="1.3" stroke-linecap="round"/><circle cx="10" cy="11.5" r="0.7" fill="var(--green)"/><path d="M4 16c1.2-1.2 3.5-2 6-2s4.8.8 6 2" stroke="var(--green2)" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <svg class="link-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H6M11 3V8" stroke="var(--green)" stroke-width="1.3" stroke-linecap="round"/></svg>
         </div>
         <div class="card-name">Inadimplência Digital</div>
         <div class="card-desc">Monitora e identifica clientes inadimplentes, facilitando a gestão e régua da cobrança.</div>
-        <div class="card-footer">
-          <span class="card-badge badge-active">Ativo</span>
-          <span class="card-url">inadimplenciadigital.vercel.app</span>
-        </div>
+        <div class="card-footer"><span class="card-badge badge-active">Ativo</span><span class="card-url">inadimplenciadigital.vercel.app</span></div>
       </a>
 
       <!-- CONTRATOS DE PRESTAÇÃO DE SERVIÇOS -->
       <a class="card clickable" href="https://contratosdeprestac-odeservicos.vercel.app/acompanhamento.html" target="_blank" rel="noopener" data-name="contrato prestação serviços elaboração envio" data-desc="elaboração envio contrato prestação de serviços" data-status="ativo">
         <div class="card-top">
-          <div class="card-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <rect x="3" y="2" width="14" height="16" rx="2" stroke="#4de84d" stroke-width="1.3"/>
-              <line x1="6" y1="6" x2="14" y2="6" stroke="#4de84d" stroke-width="1.2"/>
-              <line x1="6" y1="9" x2="14" y2="9" stroke="#2a5a2a" stroke-width="1.2"/>
-              <line x1="6" y1="12" x2="14" y2="12" stroke="#2a5a2a" stroke-width="1.2"/>
-              <path d="M6 15l1.5 1L10 13" stroke="#4de84d" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <svg class="link-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M3 11L11 3M11 3H6M11 3V8" stroke="#4de84d" stroke-width="1.3" stroke-linecap="round"/>
-          </svg>
+          <div class="card-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="2" width="14" height="16" rx="2" stroke="var(--green)" stroke-width="1.3"/><line x1="6" y1="6" x2="14" y2="6" stroke="var(--green)" stroke-width="1.2"/><line x1="6" y1="9" x2="14" y2="9" stroke="var(--green2)" stroke-width="1.2"/><line x1="6" y1="12" x2="14" y2="12" stroke="var(--green2)" stroke-width="1.2"/><path d="M6 15l1.5 1L10 13" stroke="var(--green)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <svg class="link-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H6M11 3V8" stroke="var(--green)" stroke-width="1.3" stroke-linecap="round"/></svg>
         </div>
         <div class="card-name">Contratos de prestação de serviços</div>
         <div class="card-desc">Elaboração e envio do contrato de prestação de serviços.</div>
-        <div class="card-footer">
-          <span class="card-badge badge-active">Ativo</span>
-          <span class="card-url">contratosdeprestac...vercel.app</span>
-        </div>
+        <div class="card-footer"><span class="card-badge badge-active">Ativo</span><span class="card-url">contratosdeprestac...vercel.app</span></div>
       </a>
 
       <!-- CLIENTES SUSPENSOS -->
       <a class="card clickable" href="https://clientessuspensos.vercel.app/" target="_blank" rel="noopener" data-name="clientes suspensos suspensão declarações sem movimento" data-desc="painel controle clientes suspensos declarações enviadas sem movimento" data-status="ativo">
         <div class="card-top">
-          <div class="card-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <circle cx="10" cy="7" r="3.5" stroke="#4de84d" stroke-width="1.3"/>
-              <path d="M4 17c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#2a5a2a" stroke-width="1.3" stroke-linecap="round"/>
-              <line x1="14" y1="3" x2="17" y2="6" stroke="#4de84d" stroke-width="1.3" stroke-linecap="round"/>
-              <line x1="17" y1="3" x2="14" y2="6" stroke="#4de84d" stroke-width="1.3" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <svg class="link-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M3 11L11 3M11 3H6M11 3V8" stroke="#4de84d" stroke-width="1.3" stroke-linecap="round"/>
-          </svg>
+          <div class="card-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="3.5" stroke="var(--green)" stroke-width="1.3"/><path d="M4 17c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="var(--green2)" stroke-width="1.3" stroke-linecap="round"/><line x1="14" y1="3" x2="17" y2="6" stroke="var(--green)" stroke-width="1.3" stroke-linecap="round"/><line x1="17" y1="3" x2="14" y2="6" stroke="var(--green)" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <svg class="link-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H6M11 3V8" stroke="var(--green)" stroke-width="1.3" stroke-linecap="round"/></svg>
         </div>
         <div class="card-name">Clientes suspensos</div>
         <div class="card-desc">Painel de controle dos clientes suspensos. As declarações deverão ser enviadas sem movimento.</div>
-        <div class="card-footer">
-          <span class="card-badge badge-active">Ativo</span>
-          <span class="card-url">clientessuspensos.vercel.app</span>
+        <div class="card-footer"><span class="card-badge badge-active">Ativo</span><span class="card-url">clientessuspensos.vercel.app</span></div>
+      </a>
+
+      <!-- CS360 -->
+      <a class="card clickable" href="https://painel.digitalmaiscontabilidade.com/login" target="_blank" rel="noopener" data-name="cs360 visão cliente crm relacionamento faturamento honorários churn risco engajamento" data-desc="centralização gestão relacionamento clientes faturamento honorários engajamento risco churn upgrade" data-status="ativo">
+        <div class="card-top">
+          <div class="card-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7.5" stroke="var(--green)" stroke-width="1.3"/><circle cx="10" cy="10" r="4" stroke="var(--green2)" stroke-width="1.2"/><circle cx="10" cy="10" r="1.2" fill="var(--green)"/><line x1="10" y1="2.5" x2="10" y2="5" stroke="var(--green)" stroke-width="1.2" stroke-linecap="round"/><line x1="10" y1="15" x2="10" y2="17.5" stroke="var(--green)" stroke-width="1.2" stroke-linecap="round"/><line x1="2.5" y1="10" x2="5" y2="10" stroke="var(--green)" stroke-width="1.2" stroke-linecap="round"/><line x1="15" y1="10" x2="17.5" y2="10" stroke="var(--green)" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <svg class="link-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H6M11 3V8" stroke="var(--green)" stroke-width="1.3" stroke-linecap="round"/></svg>
         </div>
+        <div class="card-name">CS360 — Visão completa do cliente</div>
+        <div class="card-desc">Centralização de gestão de relacionamento com clientes. Monitora faturamento, honorários, engajamento e risco de churn em tempo real.</div>
+        <div class="card-footer"><span class="card-badge badge-active">Ativo</span><span class="card-url">painel.digitalmais...com</span></div>
       </a>
 
       <!-- ✏️ ADICIONE NOVOS SISTEMAS ATIVOS AQUI -->
@@ -272,102 +252,50 @@
 
   <!-- ==============================================================
        SISTEMAS EM BREVE
-       Para ativar um sistema: mova o bloco para a seção acima,
+       Para ativar: mova o bloco para a seção acima,
        troque <div class="card inactive"> por <a class="card clickable" href="URL">
-       e atualize data-name, data-desc, card-name, card-desc, card-url.
   =============================================================== -->
   <div id="comingSection">
     <div class="section-label">Em breve</div>
-    <div class="grid" id="comingGrid">
+    <div class="grid">
 
-      <!-- COBRANÇA AUTOMÁTICA -->
       <div class="card inactive" data-name="cobrança automatica conta azul régua cobrança" data-desc="automatiza envio cobranças conta azul régua comunicação programada" data-status="em breve">
-        <div class="card-top">
-          <div class="card-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <rect x="2" y="5" width="16" height="11" rx="2" stroke="#2a2a2a" stroke-width="1.3"/>
-              <line x1="2" y1="8" x2="18" y2="8" stroke="#2a2a2a" stroke-width="1.3"/>
-              <circle cx="6" cy="13" r="1.5" fill="#2a2a2a"/>
-            </svg>
-          </div>
-        </div>
+        <div class="card-top"><div class="card-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="5" width="16" height="11" rx="2" stroke="var(--inactive)" stroke-width="1.3"/><line x1="2" y1="8" x2="18" y2="8" stroke="var(--inactive)" stroke-width="1.3"/><circle cx="6" cy="13" r="1.5" fill="var(--inactive)"/></svg></div></div>
         <div class="card-name">Cobrança automática</div>
         <div class="card-desc">Automatiza o envio de cobranças via Conta Azul com régua de comunicação programada.</div>
         <span class="card-badge badge-coming">Em breve</span>
       </div>
 
-      <!-- RELATÓRIO FINANCEIRO MENSAL -->
       <div class="card inactive" data-name="relatório financeiro mensal relatorio" data-desc="gera relatórios financeiros mensais automatizados clientes" data-status="em breve">
-        <div class="card-top">
-          <div class="card-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <polyline points="3,14 7,9 10,12 14,6 17,8" stroke="#2a2a2a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            </svg>
-          </div>
-        </div>
+        <div class="card-top"><div class="card-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><polyline points="3,14 7,9 10,12 14,6 17,8" stroke="var(--inactive)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div></div>
         <div class="card-name">Relatório financeiro mensal</div>
         <div class="card-desc">Gera relatórios financeiros mensais de forma automatizada para os clientes.</div>
         <span class="card-badge badge-coming">Em breve</span>
       </div>
 
-      <!-- CONFERÊNCIA DE BALANCETE -->
       <div class="card inactive" data-name="conferência balancete mensal conferencia" data-desc="confere valida balancete mensal automatizado reduz erros manuais" data-status="em breve">
-        <div class="card-top">
-          <div class="card-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <rect x="3" y="2" width="14" height="16" rx="2" stroke="#2a2a2a" stroke-width="1.3"/>
-              <line x1="6" y1="7" x2="14" y2="7" stroke="#2a2a2a" stroke-width="1.2"/>
-              <line x1="6" y1="10" x2="14" y2="10" stroke="#2a2a2a" stroke-width="1.2"/>
-              <line x1="6" y1="13" x2="10" y2="13" stroke="#2a2a2a" stroke-width="1.2"/>
-            </svg>
-          </div>
-        </div>
+        <div class="card-top"><div class="card-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="2" width="14" height="16" rx="2" stroke="var(--inactive)" stroke-width="1.3"/><line x1="6" y1="7" x2="14" y2="7" stroke="var(--inactive)" stroke-width="1.2"/><line x1="6" y1="10" x2="14" y2="10" stroke="var(--inactive)" stroke-width="1.2"/><line x1="6" y1="13" x2="10" y2="13" stroke="var(--inactive)" stroke-width="1.2"/></svg></div></div>
         <div class="card-name">Conferência de balancete mensal</div>
         <div class="card-desc">Confere e valida o balancete mensal de forma automatizada, reduzindo erros manuais.</div>
         <span class="card-badge badge-coming">Em breve</span>
       </div>
 
-      <!-- ONBOARDING -->
       <div class="card inactive" data-name="onboarding novos clientes integração boas vindas" data-desc="conduz processo boas vindas integração novos clientes escritório" data-status="em breve">
-        <div class="card-top">
-          <div class="card-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <circle cx="8" cy="7" r="3" stroke="#2a2a2a" stroke-width="1.3"/>
-              <path d="M3 17c0-3 2.2-5 5-5" stroke="#2a2a2a" stroke-width="1.3" stroke-linecap="round"/>
-              <path d="M14 12l2 2 3-3" stroke="#2a2a2a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </div>
+        <div class="card-top"><div class="card-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="8" cy="7" r="3" stroke="var(--inactive)" stroke-width="1.3"/><path d="M3 17c0-3 2.2-5 5-5" stroke="var(--inactive)" stroke-width="1.3" stroke-linecap="round"/><path d="M14 12l2 2 3-3" stroke="var(--inactive)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
         <div class="card-name">Onboarding de novos clientes</div>
         <div class="card-desc">Conduz o processo de boas-vindas e integração de novos clientes ao escritório.</div>
         <span class="card-badge badge-coming">Em breve</span>
       </div>
 
-      <!-- COBRANÇA DE DOCUMENTOS ACESSÓRIAS -->
       <div class="card inactive" data-name="cobrança documentos acessórias acessorias pendentes" data-desc="notifica automaticamente clientes documentos pendentes envio acessórias" data-status="em breve">
-        <div class="card-top">
-          <div class="card-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M10 3l1.5 3 3.5.5-2.5 2.5.5 3.5L10 11l-3 1.5.5-3.5L5 6.5l3.5-.5z" stroke="#2a2a2a" stroke-width="1.3" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </div>
+        <div class="card-top"><div class="card-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3l1.5 3 3.5.5-2.5 2.5.5 3.5L10 11l-3 1.5.5-3.5L5 6.5l3.5-.5z" stroke="var(--inactive)" stroke-width="1.3" stroke-linejoin="round"/></svg></div></div>
         <div class="card-name">Cobrança de documentos Acessórias</div>
         <div class="card-desc">Notifica automaticamente clientes com documentos pendentes de envio no Acessórias.</div>
         <span class="card-badge badge-coming">Em breve</span>
       </div>
 
-      <!-- INTEGRAÇÃO DIGITALZINHO + ZAPPY -->
       <div class="card inactive" data-name="integração digitalzinho zappy contábil contabil" data-desc="integra digitalzinho zappy contábil automatizar troca informações sistemas" data-status="em breve">
-        <div class="card-top">
-          <div class="card-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <circle cx="5" cy="10" r="2.5" stroke="#2a2a2a" stroke-width="1.3"/>
-              <circle cx="15" cy="10" r="2.5" stroke="#2a2a2a" stroke-width="1.3"/>
-              <line x1="7.5" y1="10" x2="12.5" y2="10" stroke="#2a2a2a" stroke-width="1.3" stroke-dasharray="2 1.5"/>
-            </svg>
-          </div>
-        </div>
+        <div class="card-top"><div class="card-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="5" cy="10" r="2.5" stroke="var(--inactive)" stroke-width="1.3"/><circle cx="15" cy="10" r="2.5" stroke="var(--inactive)" stroke-width="1.3"/><line x1="7.5" y1="10" x2="12.5" y2="10" stroke="var(--inactive)" stroke-width="1.3" stroke-dasharray="2 1.5"/></svg></div></div>
         <div class="card-name">Integração Digitalzinho + Zappy Contábil</div>
         <div class="card-desc">Integra o Digitalzinho ao Zappy Contábil para automatizar a troca de informações entre os sistemas.</div>
         <span class="card-badge badge-coming">Em breve</span>
@@ -384,11 +312,25 @@
 
   <script>
     let currentFilter = 'todos';
-    function normalize(str) { return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+    let isLight = false;
+
+    function toggleTheme() {
+      isLight = !isLight;
+      document.body.classList.toggle('light', isLight);
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    }
+
+    // Restaurar tema salvo
+    if (localStorage.getItem('theme') === 'light') {
+      isLight = true;
+      document.body.classList.add('light');
+    }
+
     function updateCounts() {
       document.getElementById('countAtivo').textContent = document.querySelectorAll('.card[data-status="ativo"]').length;
       document.getElementById('countComing').textContent = document.querySelectorAll('.card[data-status="em breve"]').length;
     }
+    function normalize(str) { return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
     function setFilter(filter, btn) {
       currentFilter = filter;
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
